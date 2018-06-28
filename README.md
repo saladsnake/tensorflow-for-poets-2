@@ -1,5 +1,7 @@
 # Overview
 
+https://codelabs.developers.google.com/codelabs/tensorflow-for-poets/?utm_campaign=chrome_series_machinelearning_063016&utm_source=gdev&utm_medium=yt-desc#0
+
 This repo contains code for the "TensorFlow for poets 2" series of codelabs.
 
 There are multiple versions of this codelab depending on which version 
