@@ -1,22 +1,23 @@
 # Overview
 
-https://codelabs.developers.google.com/codelabs/tensorflow-for-poets/?utm_campaign=chrome_series_machinelearning_063016&utm_source=gdev&utm_medium=yt-desc#0
+This is the Codelab guide to retraining this tensorflow image classifier:
+goo.gl/8seMCU
 
-This repo contains code for the "TensorFlow for poets 2" series of codelabs.
+I have retrained it to identify the toyota supra and toyota corolla.
 
-There are multiple versions of this codelab depending on which version 
-of the tensorflow libraries you plan on using:
+To retrain, pass these settings inside Linux shell variables first
+- export IMAGE_SIZE=224
+- export ARCHITECTURE="mobilenet_0.50_${IMAGE_SIZE}"
 
-* For [TensorFlow Lite](https://www.tensorflow.org/mobile/tflite/) the new, ground up rewrite targeted at mobile devices
-  use [this version of the codelab](https://codelabs.developers.google.com/codelabs/tensorflow-for-poets-2-tflite) 
-* For the more mature [TensorFlow Mobile](https://www.tensorflow.org/mobile/mobile_intro) use 
-  [this version of the codealab](https://codelabs.developers.google.com/codelabs/tensorflow-for-poets-2).
+Launch tensorboard before training
+- tensorboard --logdir tf_files/training_summaries &
 
-
-This repo contains simplified and trimmed down version of tensorflow's example image classification apps.
-
-* The TensorFlow Lite version, in `android/tflite`, comes from [tensorflow/contrib/lite/](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/lite).
-* The Tensorflow Mobile version, in `android/tfmobile`, comes from [tensorflow/examples/android/](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android).
-
-The `scripts` directory contains helpers for the codelab. Some of these come from the main TensorFlow repository, and are included here so you can use them without also downloading the main TensorFlow repo (they are not part of the TensorFlow `pip` installation).
-
+Run the training script with this command 
+- python -m scripts.retrain \
+-   --bottleneck_dir=tf_files/bottlenecks \
+-   --model_dir=tf_files/models/"${ARCHITECTURE}" \
+-   --summaries_dir=tf_files/training_summaries/"${ARCHITECTURE}" \
+-   --output_graph=tf_files/retrained_graph.pb \
+-   --output_labels=tf_files/retrained_labels.txt \
+-   --architecture="${ARCHITECTURE}" \
+-   --image_dir=tf_files/(folder all the images are in)
